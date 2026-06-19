@@ -1,0 +1,15 @@
+---
+// 圖片引用抽象層：
+// 現在 IMAGE_BASE='' → 圖片由 public/ 直接 serve（如 /images/foo.jpg）。
+// 未來搬到 Cloudflare R2 時，只要把 IMAGE_BASE 改成 CDN 網址即可，文章不需更動。
+const IMAGE_BASE = '';
+
+interface Props {
+  src: string;
+  alt?: string;
+  class?: string;
+}
+const { src, alt = '', class: className = '' } = Astro.props;
+const finalSrc = src.startsWith('http') ? src : `${IMAGE_BASE}${src}`;
+---
+<img src={finalSrc} alt={alt} class={className} loading="lazy" decoding="async" />
