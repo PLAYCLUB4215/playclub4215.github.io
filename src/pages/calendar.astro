@@ -1,0 +1,45 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout title="行事曆 | MIN ZANG" description="我的行程與活動行事曆。">
+  <h1>行事曆</h1>
+  <p class="muted">未來計畫與近期活動。顏色＝分類（在 Google 日曆建立活動時選色）。</p>
+  <div id="calendar"></div>
+</BaseLayout>
+
+<script>
+  import { Calendar } from '@fullcalendar/core';
+  import dayGridPlugin from '@fullcalendar/daygrid';
+  import listPlugin from '@fullcalendar/list';
+  import googleCalendarPlugin from '@fullcalendar/google-calendar';
+  import zhTwLocale from '@fullcalendar/core/locales/zh-tw';
+  import { GCAL_API_KEY, GCAL_ID } from '../config/calendar';
+
+  const el = document.getElementById('calendar');
+  if (el) {
+    const isMobile = window.matchMedia('(max-width: 600px)').matches;
+    const calendar = new Calendar(el, {
+      plugins: [dayGridPlugin, listPlugin, googleCalendarPlugin],
+      googleCalendarApiKey: GCAL_API_KEY,
+      events: { googleCalendarId: GCAL_ID },
+      initialView: isMobile ? 'listMonth' : 'dayGridMonth',
+      locale: zhTwLocale,
+      firstDay: 1,
+      headerToolbar: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'dayGridMonth,listMonth',
+      },
+      buttonText: { today: '今天', month: '月曆', list: '清單' },
+      height: 'auto',
+      // 過去的活動淡化，讓未來計畫更突出
+      eventDidMount(info) {
+        const ref = info.event.end ?? info.event.start;
+        if (ref && ref < new Date()) {
+          info.el.style.opacity = '0.55';
+        }
+      },
+    });
+    calendar.render();
+  }
+</script>

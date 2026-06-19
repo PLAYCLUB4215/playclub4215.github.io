@@ -125,3 +125,25 @@ h1, h2, h3 { line-height: 1.25; font-weight: 700; }
 }
 .album-grid a:hover img { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18); }
 .album-grid figcaption { font-size: 0.8rem; color: var(--color-muted); margin-top: 0.35rem; }
+
+/* 行事曆（FullCalendar）配色，融入站風 */
+#calendar {
+  --fc-border-color: #e8edf0;
+  --fc-today-bg-color: rgba(14, 116, 144, 0.08);
+  --fc-button-bg-color: var(--color-accent);
+  --fc-button-border-color: var(--color-accent);
+  --fc-button-hover-bg-color: var(--color-accent-strong);
+  --fc-button-hover-border-color: var(--color-accent-strong);
+  --fc-button-active-bg-color: var(--color-accent-strong);
+  --fc-button-active-border-color: var(--color-accent-strong);
+  --fc-list-event-hover-bg-color: rgba(14, 116, 144, 0.06);
+  font-size: 0.92rem;
+  margin-top: 1.25rem;
+}
+#calendar .fc-toolbar-title { font-size: 1.25rem; }
+#calendar .fc-col-header-cell-cushion,
+#calendar .fc-daygrid-day-number { color: var(--color-text); text-decoration: none; }
+@media (max-width: 600px) {
+  #calendar .fc-toolbar.fc-header-toolbar { flex-direction: column; gap: 0.5rem; }
+  #calendar .fc-toolbar-title { font-size: 1.1rem; }
+}
