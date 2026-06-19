@@ -162,9 +162,76 @@ h1, h2, h3 { line-height: 1.25; font-weight: 700; }
 .video-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
 .video-embed figcaption { font-size: 0.82rem; color: var(--color-muted); margin-top: 0.4rem; }
 
-/* oneko 互動貓：只在有滑鼠（hover）的裝置顯示，觸控手機隱藏 */
-@media (hover: none) {
-  #oneko { display: none !important; }
+/* oneko 互動貓：桌機追游標，手機可用觸控逗牠（見 BaseLayout 的 touch→mousemove 轉換） */
+
+/* 音樂播放器（固定在左下角的小膠囊） */
+.music-player {
+  position: fixed;
+  left: 1rem;
+  bottom: 1rem;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  max-width: 220px;
+  padding: 0.35rem 0.75rem 0.35rem 0.4rem;
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 999px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.15);
+  font-size: 0.85rem;
+}
+.music-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  flex-shrink: 0;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  background: var(--color-accent);
+  color: #fff;
+  font-size: 0.7rem;
+  line-height: 1;
+}
+.music-btn:hover { background: var(--color-accent-strong); }
+.music-btn:disabled { background: #b8c4cc; cursor: default; }
+.music-next { width: 1.7rem; height: 1.7rem; background: transparent; color: var(--color-accent); font-size: 0.9rem; }
+.music-next:hover { background: rgba(14, 116, 144, 0.1); }
+.music-title { color: var(--color-text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.music-icon-pause { display: none; }
+.music-player.playing .music-icon-play { display: none; }
+.music-player.playing .music-icon-pause { display: inline; }
+@media (max-width: 600px) {
+  .music-player { left: 0.6rem; bottom: 0.6rem; max-width: 168px; }
+}
+
+/* 簡單動畫（尊重「減少動態效果」設定；.anim 由 BaseLayout 的 head script 加上） */
+@media (prefers-reduced-motion: no-preference) {
+  .anim main.container { animation: fade-up 0.5s ease both; }
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: none; }
+  }
+  .anim .post-card,
+  .anim .timeline-item,
+  .anim .album-grid figure,
+  .anim .video-embed {
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  .anim .post-card.in,
+  .anim .timeline-item.in,
+  .anim .album-grid figure.in,
+  .anim .video-embed.in {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 /* 行事曆（FullCalendar）配色，融入站風 */

@@ -1,5 +1,6 @@
 ---
 import Nav from '../components/Nav.astro';
+import MusicPlayer from '../components/MusicPlayer.astro';
 import '../styles/global.css';
 
 interface Props {
@@ -16,6 +17,7 @@ const { title, description = '生活、旅遊與 AI 專案的個人紀錄。' } 
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <script is:inline>document.documentElement.classList.add('anim');</script>
   </head>
   <body>
     <header class="site-header">
@@ -27,6 +29,33 @@ const { title, description = '生活、旅遊與 AI 專案的個人紀錄。' } 
     <footer class="site-footer">
       <div class="container">© {new Date().getFullYear()} MIN ZANG</div>
     </footer>
+    <MusicPlayer />
     <script src="/oneko.js" data-cat="/oneko.gif" is:inline></script>
+    <script is:inline>
+      // 讓手機觸控也能逗貓：把 touch 轉成 mousemove，貓就會追手指
+      function onekoTouch(e) {
+        var t = e.touches[0];
+        if (!t) return;
+        document.dispatchEvent(new MouseEvent('mousemove', { clientX: t.clientX, clientY: t.clientY }));
+      }
+      document.addEventListener('touchstart', onekoTouch, { passive: true });
+      document.addEventListener('touchmove', onekoTouch, { passive: true });
+
+      // 捲動進場動畫：元素進入畫面時淡入上移（尊重 prefers-reduced-motion 由 CSS 控制）
+      (function () {
+        var els = document.querySelectorAll('.post-card, .timeline-item, .album-grid figure, .video-embed');
+        if (!els.length) return;
+        if (!('IntersectionObserver' in window)) {
+          els.forEach(function (el) { el.classList.add('in'); });
+          return;
+        }
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (en) {
+            if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); }
+          });
+        }, { threshold: 0.08 });
+        els.forEach(function (el) { io.observe(el); });
+      })();
+    </script>
   </body>
 </html>

@@ -1,0 +1,48 @@
+---
+import { playlist } from '../data/music';
+const hasMusic = playlist.length > 0;
+const firstTitle = hasMusic ? playlist[0].title : '尚未加入音樂';
+---
+<div id="music-player" class="music-player">
+  <button id="music-toggle" class="music-btn" aria-label="播放 / 暫停" disabled={!hasMusic}>
+    <span class="music-icon-play">▶</span>
+    <span class="music-icon-pause">❚❚</span>
+  </button>
+  <span id="music-title" class="music-title">{firstTitle}</span>
+  {playlist.length > 1 && (
+    <button id="music-next" class="music-btn music-next" aria-label="下一首">⏭</button>
+  )}
+  <audio id="music-audio" preload="none"></audio>
+</div>
+
+<script>
+  import { playlist } from '../data/music';
+
+  const audio = document.getElementById('music-audio') as HTMLAudioElement | null;
+  const toggle = document.getElementById('music-toggle');
+  const nextBtn = document.getElementById('music-next');
+  const titleEl = document.getElementById('music-title');
+  const player = document.getElementById('music-player');
+
+  if (audio && toggle && player && playlist.length > 0) {
+    let idx = 0;
+    const load = (i: number) => {
+      idx = (i + playlist.length) % playlist.length;
+      audio.src = playlist[idx].src;
+      if (titleEl) titleEl.textContent = playlist[idx].title;
+    };
+    load(0);
+
+    toggle.addEventListener('click', () => {
+      if (audio.paused) audio.play(); else audio.pause();
+    });
+    audio.addEventListener('play', () => player.classList.add('playing'));
+    audio.addEventListener('pause', () => player.classList.remove('playing'));
+    audio.addEventListener('ended', () => { load(idx + 1); audio.play(); });
+    nextBtn?.addEventListener('click', () => {
+      const wasPlaying = !audio.paused;
+      load(idx + 1);
+      if (wasPlaying) audio.play();
+    });
+  }
+</script>
