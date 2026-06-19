@@ -24,11 +24,16 @@ body {
   line-height: 1.7;
 }
 
-/* 固定背景照片：用 fixed 圖層而非 background-attachment:fixed，手機相容性較好 */
+/* 固定背景照片：用 fixed 圖層而非 background-attachment:fixed，手機相容性較好。
+   高度鎖成 100lvh（最大視窗高度，固定值），手機網址列縮放時背景不會跟著跳動。 */
 body::before {
   content: "";
   position: fixed;
-  inset: 0;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  height: 100lvh;
   z-index: -1;
   background: url('/images/background.jpg') center center / cover no-repeat;
 }
