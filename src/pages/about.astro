@@ -2,7 +2,19 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 <BaseLayout title="關於 | MIN ZANG">
-  <h1>關於我</h1>
-  <p>我是 MIN ZANG。這個網站用來記錄生活、旅遊與 AI 專案。</p>
-  <p>（之後可以請 Claude 幫你把這段改成完整的自我介紹。）</p>
+  <section class="about-hero">
+    <img class="about-avatar" src="/images/about/avatar.svg" alt="MIN ZANG" />
+    <div class="about-intro">
+      <p class="about-role">旅人 · 紀錄者</p>
+      <h1 class="about-name">MIN ZANG</h1>
+      <p class="about-bio">
+        （這裡之後換成你的自我介紹。先放一段示意文字：我喜歡旅行、紀錄生活，
+        也在做一些 AI 與個人專案。這個網站是我存放這些片段的地方。）
+      </p>
+      <div class="about-actions">
+        <a class="btn btn-primary" href="mailto:zangunknow42@gmail.com">聯絡我</a>
+        <a class="btn btn-ghost" href="/timeline">我的時間線</a>
+      </div>
+    </div>
+  </section>
 </BaseLayout>
