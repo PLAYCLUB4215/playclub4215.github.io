@@ -162,6 +162,11 @@ h1, h2, h3 { line-height: 1.25; font-weight: 700; }
 .video-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
 .video-embed figcaption { font-size: 0.82rem; color: var(--color-muted); margin-top: 0.4rem; }
 
+/* oneko 互動貓：只在有滑鼠（hover）的裝置顯示，觸控手機隱藏 */
+@media (hover: none) {
+  #oneko { display: none !important; }
+}
+
 /* 行事曆（FullCalendar）配色，融入站風 */
 #calendar {
   --fc-border-color: #e8edf0;
