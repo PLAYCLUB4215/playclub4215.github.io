@@ -106,13 +106,29 @@ h1, h2, h3 { line-height: 1.25; font-weight: 700; }
 
 .post-list { list-style: none; padding: 0; margin: 0; }
 .post-list li {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
   padding: 1.1rem 0.4rem;
   border-bottom: 1px solid var(--color-border);
   border-radius: 8px;
   transition: background 0.15s ease;
 }
 .post-list li:hover { background: rgba(14, 116, 144, 0.05); }
-.post-list .title { font-size: 1.18rem; font-weight: 600; }
+.post-thumb { flex-shrink: 0; display: block; line-height: 0; }
+.post-thumb img {
+  width: 104px;
+  height: 78px;
+  object-fit: cover;
+  border-radius: 8px;
+  display: block;
+}
+.post-body { flex: 1; min-width: 0; }
+.post-list .title { font-size: 1.12rem; font-weight: 600; display: block; }
+.post-desc { margin: 0.3rem 0 0; color: #374151; font-size: 0.95rem; }
+@media (max-width: 460px) {
+  .post-thumb img { width: 84px; height: 63px; }
+}
 
 .album-grid {
   display: grid;

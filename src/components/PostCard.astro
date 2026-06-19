@@ -4,12 +4,19 @@ interface Props {
   title: string;
   date: Date;
   description?: string;
+  cover?: string;
 }
-const { href, title, date, description } = Astro.props;
+const { href, title, date, description, cover } = Astro.props;
 const dateStr = date.toISOString().slice(0, 10);
+const thumb = cover ?? '/images/placeholder-thumb.svg';
 ---
-<li>
-  <a class="title" href={href}>{title}</a>
-  <div class="muted">{dateStr}</div>
-  {description && <p>{description}</p>}
+<li class="post-card">
+  <a class="post-thumb" href={href}>
+    <img src={thumb} alt={title} loading="lazy" />
+  </a>
+  <div class="post-body">
+    <a class="title" href={href}>{title}</a>
+    <div class="muted">{dateStr}</div>
+    {description && <p class="post-desc">{description}</p>}
+  </div>
 </li>
