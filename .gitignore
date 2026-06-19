@@ -10,3 +10,5 @@ node_modules/
 # os
 .DS_Store
 Thumbs.db
+# playwright test artifacts
+.playwright-mcp/

@@ -1,3 +1,0 @@
-[   36433ms] [ERROR] Failed to load resource: the server responded with a status of 403 () @ https://www.googleapis.com/calendar/v3/calendars/504eaf236e017ff884f90a7bc4eb184a7ccdec6e82315d63617fabb62c02a346%40group.calendar.google.com/events?key=AIzaSyAoliTWGvpvWLIDedz0I569VX3piOvY6As&timeMin=2026-06-01T00%3A00%3A00%2B08%3A00&timeMax=2026-07-13T00%3A00%3A00%2B08%3A00&singleEvents=true&maxResults=9999:0
-[   36433ms] [WARNING] Request failed It: Request failed
-    at http://localhost:4321/_astro/calendar.astro_astro_type_script_index_0_lang.Bnt6IoeF.js:1:90954 @ http://localhost:4321/_astro/calendar.astro_astro_type_script_index_0_lang.Bnt6IoeF.js:0
