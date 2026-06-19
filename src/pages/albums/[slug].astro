@@ -1,0 +1,28 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Image from '../../components/Image.astro';
+
+export async function getStaticPaths() {
+  const albums = await getCollection('albums');
+  return albums.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const dateStr = entry.data.date.toISOString().slice(0, 10);
+---
+<BaseLayout title={`${entry.data.title} | 相簿`} description={entry.data.description}>
+  <h1>{entry.data.title}</h1>
+  <p class="muted">{dateStr}</p>
+  <Content />
+  <div class="album-grid">
+    {entry.data.images.map((img) => (
+      <figure>
+        <Image src={img.src} alt={img.caption ?? entry.data.title} />
+        {img.caption && <figcaption>{img.caption}</figcaption>}
+      </figure>
+    ))}
+  </div>
+  <p style="margin-top:2rem"><a href="/albums">← 回相簿</a></p>
+</BaseLayout>
