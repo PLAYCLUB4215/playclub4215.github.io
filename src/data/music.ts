@@ -8,5 +8,7 @@ export interface Track {
 }
 
 export const playlist: Track[] = [
-  // { title: '範例歌曲', src: '/music/example.mp3' },
+  { title: 'Moonlit Shoreline', src: '/music/moonlit-shoreline.mp3' },
+  { title: 'Golden Hour Surf', src: '/music/golden-hour-surf.mp3' },
+  { title: 'Coastal Reverie', src: '/music/coastal-reverie.mp3' },
 ];

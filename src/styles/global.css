@@ -194,7 +194,7 @@ h1, h2, h3 { line-height: 1.25; font-weight: 700; }
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  max-width: 220px;
+  max-width: 300px;
   padding: 0.35rem 0.75rem 0.35rem 0.4rem;
   background: rgba(255, 255, 255, 0.82);
   backdrop-filter: blur(10px);
@@ -223,12 +223,14 @@ h1, h2, h3 { line-height: 1.25; font-weight: 700; }
 .music-btn:disabled { background: #b8c4cc; cursor: default; }
 .music-next { width: 1.7rem; height: 1.7rem; background: transparent; color: var(--color-accent); font-size: 0.9rem; }
 .music-next:hover { background: rgba(14, 116, 144, 0.1); }
-.music-title { color: var(--color-text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.music-title { flex: 0 1 auto; min-width: 2.5rem; color: var(--color-text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.music-volume { flex-shrink: 0; width: 60px; accent-color: var(--color-accent); cursor: pointer; }
 .music-icon-pause { display: none; }
 .music-player.playing .music-icon-play { display: none; }
 .music-player.playing .music-icon-pause { display: inline; }
 @media (max-width: 600px) {
-  .music-player { left: 0.6rem; bottom: 0.6rem; max-width: 168px; }
+  .music-player { left: 0.6rem; bottom: 0.6rem; max-width: 260px; }
+  .music-volume { width: 50px; }
 }
 
 /* 簡單動畫（尊重「減少動態效果」設定；.anim 由 BaseLayout 的 head script 加上） */

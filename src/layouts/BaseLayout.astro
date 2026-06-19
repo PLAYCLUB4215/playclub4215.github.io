@@ -94,7 +94,6 @@ const { title, description = '生活、旅遊與 AI 專案的個人紀錄。' } 
             } else {
               var q = (rp - 0.20) / 0.80;
               jy = Math.abs(Math.sin(q * Math.PI * 2)) * 30; // 連跳兩下
-              rot = q * 360;                                 // 翻滾一圈
               if (ts - lastFrame > 90) { frame ^= 1; lastFrame = ts; }
               bp = RUN[frame];
             }

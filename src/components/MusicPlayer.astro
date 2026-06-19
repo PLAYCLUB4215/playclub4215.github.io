@@ -12,6 +12,9 @@ const firstTitle = hasMusic ? playlist[0].title : '尚未加入音樂';
   {playlist.length > 1 && (
     <button id="music-next" class="music-btn music-next" aria-label="下一首">⏭</button>
   )}
+  {hasMusic && (
+    <input id="music-volume" class="music-volume" type="range" min="0" max="1" step="0.05" value="0.7" aria-label="音量" />
+  )}
   <audio id="music-audio" preload="none"></audio>
 </div>
 
@@ -23,6 +26,7 @@ const firstTitle = hasMusic ? playlist[0].title : '尚未加入音樂';
   const nextBtn = document.getElementById('music-next');
   const titleEl = document.getElementById('music-title');
   const player = document.getElementById('music-player');
+  const volume = document.getElementById('music-volume') as HTMLInputElement | null;
 
   if (audio && toggle && player && playlist.length > 0) {
     let idx = 0;
@@ -31,6 +35,11 @@ const firstTitle = hasMusic ? playlist[0].title : '尚未加入音樂';
       audio.src = playlist[idx].src;
       if (titleEl) titleEl.textContent = playlist[idx].title;
     };
+
+    const savedVol = parseFloat(localStorage.getItem('music-vol') ?? '0.7');
+    audio.volume = isNaN(savedVol) ? 0.7 : savedVol;
+    if (volume) volume.value = String(audio.volume);
+
     load(0);
 
     toggle.addEventListener('click', () => {
@@ -43,6 +52,10 @@ const firstTitle = hasMusic ? playlist[0].title : '尚未加入音樂';
       const wasPlaying = !audio.paused;
       load(idx + 1);
       if (wasPlaying) audio.play();
+    });
+    volume?.addEventListener('input', () => {
+      audio.volume = parseFloat(volume.value);
+      localStorage.setItem('music-vol', volume.value);
     });
   }
 </script>
