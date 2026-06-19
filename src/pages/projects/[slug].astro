@@ -1,0 +1,20 @@
+---
+import { getCollection, render } from 'astro:content';
+import PostLayout from '../../layouts/PostLayout.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('projects');
+  return posts.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+---
+<PostLayout title={entry.data.title} date={entry.data.date} description={entry.data.description}>
+  <Content />
+  <p style="margin-top:1.5rem">
+    {entry.data.repo && <a href={entry.data.repo}>原始碼 ↗</a>}
+    {entry.data.repo && entry.data.demo && ' · '}
+    {entry.data.demo && <a href={entry.data.demo}>Demo ↗</a>}
+  </p>
+</PostLayout>

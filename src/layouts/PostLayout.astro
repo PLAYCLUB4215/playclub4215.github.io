@@ -1,0 +1,19 @@
+---
+import BaseLayout from './BaseLayout.astro';
+
+interface Props {
+  title: string;
+  date: Date;
+  description?: string;
+}
+const { title, date, description } = Astro.props;
+const dateStr = date.toISOString().slice(0, 10);
+---
+<BaseLayout title={title} description={description}>
+  <article>
+    <h1>{title}</h1>
+    <p class="muted">{dateStr}</p>
+    <slot />
+  </article>
+  <p style="margin-top:2rem"><a href="/">← 回首頁</a></p>
+</BaseLayout>

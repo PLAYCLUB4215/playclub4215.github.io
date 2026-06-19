@@ -1,0 +1,15 @@
+---
+interface Props {
+  href: string;
+  title: string;
+  date: Date;
+  description?: string;
+}
+const { href, title, date, description } = Astro.props;
+const dateStr = date.toISOString().slice(0, 10);
+---
+<li>
+  <a class="title" href={href}>{title}</a>
+  <div class="muted">{dateStr}</div>
+  {description && <p>{description}</p>}
+</li>
