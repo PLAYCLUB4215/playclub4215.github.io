@@ -11,6 +11,12 @@ export async function getStaticPaths() {
 const { entry } = Astro.props;
 const { Content } = await render(entry);
 const dateStr = entry.data.date.toISOString().slice(0, 10);
+
+// 接受完整 YouTube 網址或 11 碼影片 ID，統一取出 ID
+const ytId = (s: string) => {
+  const m = s.match(/(?:youtu\.be\/|v=|embed\/|shorts\/)([\w-]{11})/);
+  return m ? m[1] : s;
+};
 ---
 <BaseLayout title={`${entry.data.title} | 相簿`} description={entry.data.description}>
   <h1>{entry.data.title}</h1>
@@ -24,5 +30,23 @@ const dateStr = entry.data.date.toISOString().slice(0, 10);
       </figure>
     ))}
   </div>
+  {entry.data.videos.length > 0 && (
+    <div class="video-list">
+      {entry.data.videos.map((v) => (
+        <figure class="video-embed">
+          <div class="video-frame">
+            <iframe
+              src={`https://www.youtube-nocookie.com/embed/${ytId(v.youtube)}`}
+              title={v.caption ?? entry.data.title}
+              loading="lazy"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen
+            ></iframe>
+          </div>
+          {v.caption && <figcaption>{v.caption}</figcaption>}
+        </figure>
+      ))}
+    </div>
+  )}
   <p style="margin-top:2rem"><a href="/albums">← 回相簿</a></p>
 </BaseLayout>

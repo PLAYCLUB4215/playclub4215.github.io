@@ -38,6 +38,9 @@ const albums = defineCollection({
     images: z
       .array(z.object({ src: z.string(), caption: z.string().optional() }))
       .default([]),
+    videos: z
+      .array(z.object({ youtube: z.string(), caption: z.string().optional() }))
+      .default([]),
     draft: z.boolean().default(false),
   }),
 });

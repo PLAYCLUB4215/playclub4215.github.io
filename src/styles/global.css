@@ -131,6 +131,21 @@ h1, h2, h3 { line-height: 1.25; font-weight: 700; }
 .album-grid a:hover img { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18); }
 .album-grid figcaption { font-size: 0.8rem; color: var(--color-muted); margin-top: 0.35rem; }
 
+/* 相簿影片（YouTube 嵌入，響應式 16:9） */
+.video-list { display: grid; gap: 1.25rem; margin-top: 1.25rem; }
+.video-embed { margin: 0; }
+.video-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.15);
+  background: #000;
+}
+.video-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.video-embed figcaption { font-size: 0.82rem; color: var(--color-muted); margin-top: 0.4rem; }
+
 /* 行事曆（FullCalendar）配色，融入站風 */
 #calendar {
   --fc-border-color: #e8edf0;
