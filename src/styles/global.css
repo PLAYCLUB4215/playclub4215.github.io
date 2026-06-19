@@ -17,7 +17,10 @@ html { font-size: 17px; -webkit-text-size-adjust: 100%; }
 
 body {
   margin: 0;
+  display: flex;
+  flex-direction: column;
   min-height: 100vh;
+  min-height: 100lvh;
   font-family: var(--font-sans);
   color: var(--color-text);
   background: var(--color-bg);
@@ -46,6 +49,8 @@ body::before {
 
 /* 主內容卡片：半透明白底，照片背景上文字仍清楚可讀 */
 main.container {
+  flex: 1 0 auto;
+  width: 100%;
   background: var(--card-bg);
   border: 1px solid rgba(255, 255, 255, 0.6);
   border-radius: var(--radius);
@@ -162,32 +167,21 @@ h1, h2, h3 { line-height: 1.25; font-weight: 700; }
 .video-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
 .video-embed figcaption { font-size: 0.82rem; color: var(--color-muted); margin-top: 0.4rem; }
 
-/* 固定在右下角原地跑跳的小貓（用 oneko 的 sprite 自己做動畫，不追游標） */
+/* 沿著畫面底部跑來跑去並偶爾跳躍的小貓（用 oneko sprite，動畫由 BaseLayout 的 JS 控制） */
 #cat-runner {
   position: fixed;
-  right: 28px;
   bottom: 6px;
+  left: 0;
   width: 32px;
   height: 32px;
   background-image: url('/oneko.gif');
   background-repeat: no-repeat;
+  background-position: -96px 0;
   image-rendering: pixelated;
-  transform-origin: bottom center;
+  transform-origin: center bottom;
+  transform: translateX(20px) scaleX(2) scaleY(2);
   z-index: 50;
   pointer-events: none;
-  animation: cat-run 0.28s steps(1) infinite, cat-hop 0.9s ease-in-out infinite;
-}
-@keyframes cat-run {
-  0%, 100% { background-position: -96px 0; }
-  50% { background-position: -96px -32px; }
-}
-@keyframes cat-hop {
-  0%, 100% { transform: translateY(0) scale(2); }
-  45% { transform: translateY(-9px) scale(2); }
-  60% { transform: translateY(-9px) scale(2); }
-}
-@media (prefers-reduced-motion: reduce) {
-  #cat-runner { animation: none; background-position: -96px 0; transform: scale(2); }
 }
 
 /* 音樂播放器（固定在左下角的小膠囊） */
