@@ -1,0 +1,87 @@
+backend:
+  name: github
+  repo: playclub4215/playclub4215.github.io
+  branch: main
+
+# 上傳的圖片會 commit 到這裡，網站以 /images/uploads/... 引用
+media_folder: public/images/uploads
+public_folder: /images/uploads
+
+# 介面語言
+locale: zh
+
+collections:
+  - name: journal
+    label: 生活日誌
+    label_singular: 日誌
+    folder: src/content/journal
+    create: true
+    slug: '{{year}}-{{month}}-{{day}}-{{slug}}'
+    fields:
+      - { label: 標題, name: title, widget: string }
+      - { label: 日期, name: date, widget: datetime, format: 'YYYY-MM-DD', date_format: 'YYYY-MM-DD', time_format: false }
+      - { label: 摘要, name: description, widget: string, required: false }
+      - { label: 標籤, name: tags, widget: list, required: false, default: [] }
+      - { label: 封面圖, name: cover, widget: image, required: false }
+      - { label: 草稿, name: draft, widget: boolean, default: false, required: false }
+      - { label: 內文, name: body, widget: markdown }
+
+  - name: work
+    label: 工作日誌
+    label_singular: 工作日誌
+    folder: src/content/work
+    create: true
+    slug: '{{year}}-{{month}}-{{day}}-{{slug}}'
+    fields:
+      - { label: 標題, name: title, widget: string }
+      - { label: 日期, name: date, widget: datetime, format: 'YYYY-MM-DD', date_format: 'YYYY-MM-DD', time_format: false }
+      - { label: 摘要, name: description, widget: string, required: false }
+      - { label: 標籤, name: tags, widget: list, required: false, default: [] }
+      - { label: 封面圖, name: cover, widget: image, required: false }
+      - { label: 草稿, name: draft, widget: boolean, default: false, required: false }
+      - { label: 內文, name: body, widget: markdown }
+
+  - name: projects
+    label: 目前專案
+    label_singular: 專案
+    folder: src/content/projects
+    create: true
+    slug: '{{slug}}'
+    fields:
+      - { label: 標題, name: title, widget: string }
+      - { label: 日期, name: date, widget: datetime, format: 'YYYY-MM-DD', date_format: 'YYYY-MM-DD', time_format: false }
+      - { label: 摘要, name: description, widget: string, required: false }
+      - { label: 標籤, name: tags, widget: list, required: false, default: [] }
+      - { label: 封面圖, name: cover, widget: image, required: false }
+      - { label: 原始碼連結, name: repo, widget: string, required: false }
+      - { label: Demo 連結, name: demo, widget: string, required: false }
+      - { label: 草稿, name: draft, widget: boolean, default: false, required: false }
+      - { label: 內文, name: body, widget: markdown }
+
+  - name: albums
+    label: 相簿
+    label_singular: 相簿
+    folder: src/content/albums
+    create: true
+    slug: '{{year}}-{{month}}-{{slug}}'
+    fields:
+      - { label: 標題, name: title, widget: string }
+      - { label: 日期, name: date, widget: datetime, format: 'YYYY-MM-DD', date_format: 'YYYY-MM-DD', time_format: false }
+      - { label: 說明, name: description, widget: string, required: false }
+      - { label: 封面圖, name: cover, widget: image, required: false }
+      - label: 照片
+        name: images
+        widget: list
+        required: false
+        fields:
+          - { label: 圖片, name: src, widget: image }
+          - { label: 說明, name: caption, widget: string, required: false }
+      - label: 影片
+        name: videos
+        widget: list
+        required: false
+        fields:
+          - { label: YouTube 連結, name: youtube, widget: string }
+          - { label: 說明, name: caption, widget: string, required: false }
+      - { label: 草稿, name: draft, widget: boolean, default: false, required: false }
+      - { label: 內文, name: body, widget: markdown }
