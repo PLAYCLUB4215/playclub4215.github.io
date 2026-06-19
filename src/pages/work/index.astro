@@ -3,19 +3,19 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import PostCard from '../../components/PostCard.astro';
 
-const posts = (await getCollection('travel'))
+const posts = (await getCollection('work'))
   .filter((p) => !p.data.draft)
   .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 ---
-<BaseLayout title="旅遊 | MIN ZANG">
-  <h1>旅遊</h1>
+<BaseLayout title="工作日誌 | MIN ZANG">
+  <h1>工作日誌</h1>
   {posts.length === 0 ? (
     <p class="muted">還沒有文章。</p>
   ) : (
     <ul class="post-list">
       {posts.map((p) => (
         <PostCard
-          href={`/travel/${p.id}`}
+          href={`/work/${p.id}`}
           title={p.data.title}
           date={p.data.date}
           description={p.data.description}

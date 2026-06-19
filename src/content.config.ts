@@ -15,8 +15,8 @@ const journal = defineCollection({
   schema: postSchema,
 });
 
-const travel = defineCollection({
-  loader: glob({ pattern: '**/*.md', base: './src/content/travel' }),
+const work = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/work' }),
   schema: postSchema,
 });
 
@@ -42,4 +42,4 @@ const albums = defineCollection({
   }),
 });
 
-export const collections = { journal, travel, projects, albums };
+export const collections = { journal, work, projects, albums };

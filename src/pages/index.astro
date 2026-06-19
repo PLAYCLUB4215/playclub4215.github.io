@@ -3,12 +3,12 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PostCard from '../components/PostCard.astro';
 
-// 匯整 journal + travel 最新 5 篇
+// 匯整 生活日誌 + 工作日誌 最新 5 篇
 const journal = (await getCollection('journal')).filter((p) => !p.data.draft);
-const travel = (await getCollection('travel')).filter((p) => !p.data.draft);
+const work = (await getCollection('work')).filter((p) => !p.data.draft);
 const latest = [
   ...journal.map((p) => ({ ...p, section: 'journal' })),
-  ...travel.map((p) => ({ ...p, section: 'travel' })),
+  ...work.map((p) => ({ ...p, section: 'work' })),
 ]
   .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
   .slice(0, 5);
@@ -16,7 +16,7 @@ const latest = [
 <BaseLayout title="MIN ZANG | 個人網站">
   <section>
     <h1>嗨，我是 MIN ZANG 👋</h1>
-    <p>這裡記錄我的生活、旅遊，以及 AI 專案。</p>
+    <p>這裡記錄我的生活、工作，以及目前進行中的專案。</p>
   </section>
 
   <section>
