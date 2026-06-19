@@ -48,7 +48,7 @@ const { title, description = '生活、旅遊與 AI 專案的個人紀錄。' } 
         els.forEach(function (el) { io.observe(el); });
       })();
 
-      // 小貓：沿著底部來回跑、轉向、偶爾跳一下
+      // 小貓：沿底部跑一陣子→停下來坐著休息→再跑；點牠會驚訝→連跳兩下→翻滾
       (function () {
         var cat = document.getElementById('cat-runner');
         if (!cat) return;
@@ -58,31 +58,74 @@ const { title, description = '生活、旅遊與 AI 專案的個人紀錄。' } 
           cat.style.transform = 'translateX(20px) scaleX(2) scaleY(2)';
           return;
         }
-        var frames = ['-96px 0px', '-96px -32px'];
-        var x = 20, dir = 1, frame = 0, lastT = 0, lastFrame = 0, jumpStart = -1, nextJump = null;
-        var JUMP_DUR = 460, JUMP_H = 18, SPEED = 0.06, curJumpH = 18, pounceReq = false;
-        function maxX() { return Math.max(40, window.innerWidth - W * SCALE - 8); }
+        var RUN = ['-96px 0px', '-96px -32px'];
+        var IDLE = '-96px -96px';   // 坐著休息
+        var ALERT = '-224px -96px'; // 驚訝
+        function rand(a, b) { return a + Math.random() * (b - a); }
+
+        var x = 20, dir = 1, frame = 0, lastT = 0, lastFrame = 0;
+        var jumpStart = -1, nextJump = null;
+        var JUMP_DUR = 460, JUMP_H = 18, SPEED = 0.06;
+        var mode = 'run', modeUntil = null;
+        var REACT_DUR = 1150, reactStart = -1, pounceReq = false;
+
         function pounce() { pounceReq = true; }
         cat.addEventListener('click', pounce);
         cat.addEventListener('touchstart', function (e) { e.preventDefault(); pounce(); }, { passive: false });
+
+        function maxX() { return Math.max(40, window.innerWidth - W * SCALE - 8); }
+
         function loop(ts) {
           if (!lastT) lastT = ts;
-          if (nextJump === null) nextJump = ts + 1500;
           var dt = Math.min(50, ts - lastT); lastT = ts;
-          x += dir * SPEED * dt;
-          if (x <= 8) { x = 8; dir = 1; }
-          else if (x >= maxX()) { x = maxX(); dir = -1; }
-          if (ts - lastFrame > 130) { frame ^= 1; cat.style.backgroundPosition = frames[frame]; lastFrame = ts; }
-          var jy = 0;
-          if (pounceReq) { jumpStart = ts; curJumpH = 36; pounceReq = false; }
-          else if (jumpStart < 0 && ts > nextJump) { jumpStart = ts; curJumpH = JUMP_H; }
-          if (jumpStart >= 0) {
-            var p = (ts - jumpStart) / JUMP_DUR;
-            if (p >= 1) { jumpStart = -1; nextJump = ts + 1500; curJumpH = JUMP_H; }
-            else jy = Math.sin(Math.PI * p) * curJumpH;
+          if (modeUntil === null) modeUntil = ts + rand(4000, 8000);
+          if (nextJump === null) nextJump = ts + 1500;
+
+          if (pounceReq) { reactStart = ts; pounceReq = false; }
+
+          var jy = 0, rot = 0, bp = RUN[frame];
+
+          if (reactStart >= 0) {
+            var rp = (ts - reactStart) / REACT_DUR;
+            if (rp >= 1) {
+              reactStart = -1; mode = 'run'; modeUntil = ts + rand(3500, 7000); nextJump = ts + 1200;
+            } else if (rp < 0.20) {
+              bp = ALERT; // 驚訝（站住）
+            } else {
+              var q = (rp - 0.20) / 0.80;
+              jy = Math.abs(Math.sin(q * Math.PI * 2)) * 30; // 連跳兩下
+              rot = q * 360;                                 // 翻滾一圈
+              if (ts - lastFrame > 90) { frame ^= 1; lastFrame = ts; }
+              bp = RUN[frame];
+            }
           }
+
+          if (reactStart < 0) {
+            if (ts > modeUntil) {
+              if (mode === 'run') { mode = 'idle'; modeUntil = ts + rand(2000, 5000); }
+              else { mode = 'run'; modeUntil = ts + rand(4000, 8000); }
+            }
+            if (mode === 'run') {
+              x += dir * SPEED * dt;
+              if (x <= 8) { x = 8; dir = 1; }
+              else if (x >= maxX()) { x = maxX(); dir = -1; }
+              if (ts - lastFrame > 130) { frame ^= 1; lastFrame = ts; }
+              bp = RUN[frame];
+              if (jumpStart < 0 && ts > nextJump) jumpStart = ts;
+              if (jumpStart >= 0) {
+                var p = (ts - jumpStart) / JUMP_DUR;
+                if (p >= 1) { jumpStart = -1; nextJump = ts + rand(1200, 2600); }
+                else jy = Math.sin(Math.PI * p) * JUMP_H;
+              }
+            } else {
+              bp = IDLE; // 停下來坐著
+              jumpStart = -1;
+            }
+          }
+
           var face = (dir === 1) ? 1 : -1;
-          cat.style.transform = 'translateX(' + x.toFixed(1) + 'px) translateY(' + (-jy).toFixed(1) + 'px) scaleX(' + (SCALE * face) + ') scaleY(' + SCALE + ')';
+          cat.style.backgroundPosition = bp;
+          cat.style.transform = 'translateX(' + x.toFixed(1) + 'px) translateY(' + (-jy).toFixed(1) + 'px) rotate(' + rot.toFixed(1) + 'deg) scaleX(' + (SCALE * face) + ') scaleY(' + SCALE + ')';
           requestAnimationFrame(loop);
         }
         requestAnimationFrame(loop);
