@@ -60,8 +60,11 @@ const { title, description = '生活、旅遊與 AI 專案的個人紀錄。' } 
         }
         var frames = ['-96px 0px', '-96px -32px'];
         var x = 20, dir = 1, frame = 0, lastT = 0, lastFrame = 0, jumpStart = -1, nextJump = null;
-        var JUMP_DUR = 460, JUMP_H = 18, SPEED = 0.06;
+        var JUMP_DUR = 460, JUMP_H = 18, SPEED = 0.06, curJumpH = 18, pounceReq = false;
         function maxX() { return Math.max(40, window.innerWidth - W * SCALE - 8); }
+        function pounce() { pounceReq = true; }
+        cat.addEventListener('click', pounce);
+        cat.addEventListener('touchstart', function (e) { e.preventDefault(); pounce(); }, { passive: false });
         function loop(ts) {
           if (!lastT) lastT = ts;
           if (nextJump === null) nextJump = ts + 1500;
@@ -71,13 +74,14 @@ const { title, description = '生活、旅遊與 AI 專案的個人紀錄。' } 
           else if (x >= maxX()) { x = maxX(); dir = -1; }
           if (ts - lastFrame > 130) { frame ^= 1; cat.style.backgroundPosition = frames[frame]; lastFrame = ts; }
           var jy = 0;
-          if (jumpStart < 0 && ts > nextJump) jumpStart = ts;
+          if (pounceReq) { jumpStart = ts; curJumpH = 36; pounceReq = false; }
+          else if (jumpStart < 0 && ts > nextJump) { jumpStart = ts; curJumpH = JUMP_H; }
           if (jumpStart >= 0) {
             var p = (ts - jumpStart) / JUMP_DUR;
-            if (p >= 1) { jumpStart = -1; nextJump = ts + 1500; }
-            else jy = Math.sin(Math.PI * p) * JUMP_H;
+            if (p >= 1) { jumpStart = -1; nextJump = ts + 1500; curJumpH = JUMP_H; }
+            else jy = Math.sin(Math.PI * p) * curJumpH;
           }
-          var face = (dir === 1) ? -1 : 1;
+          var face = (dir === 1) ? 1 : -1;
           cat.style.transform = 'translateX(' + x.toFixed(1) + 'px) translateY(' + (-jy).toFixed(1) + 'px) scaleX(' + (SCALE * face) + ') scaleY(' + SCALE + ')';
           requestAnimationFrame(loop);
         }

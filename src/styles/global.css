@@ -181,7 +181,8 @@ h1, h2, h3 { line-height: 1.25; font-weight: 700; }
   transform-origin: center bottom;
   transform: translateX(20px) scaleX(2) scaleY(2);
   z-index: 50;
-  pointer-events: none;
+  pointer-events: auto;
+  cursor: pointer;
 }
 
 /* 音樂播放器（固定在左下角的小膠囊） */
