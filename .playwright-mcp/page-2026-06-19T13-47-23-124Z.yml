@@ -1,0 +1,155 @@
+- generic [active] [ref=e70]:
+  - banner [ref=e71]:
+    - navigation [ref=e73]:
+      - link "MIN ZANG" [ref=e74] [cursor=pointer]:
+        - /url: /
+      - generic [ref=e75]:
+        - link "生活日誌" [ref=e76] [cursor=pointer]:
+          - /url: /journal
+        - link "工作日誌" [ref=e77] [cursor=pointer]:
+          - /url: /work
+        - link "時間線" [ref=e78] [cursor=pointer]:
+          - /url: /timeline
+        - link "行事曆" [ref=e79] [cursor=pointer]:
+          - /url: /calendar
+        - link "相簿" [ref=e80] [cursor=pointer]:
+          - /url: /albums
+        - link "目前專案" [ref=e81] [cursor=pointer]:
+          - /url: /projects
+        - link "關於" [ref=e82] [cursor=pointer]:
+          - /url: /about
+  - main [ref=e83]:
+    - heading "行事曆" [level=1] [ref=e84]
+    - paragraph [ref=e85]: 未來計畫與近期活動。顏色＝分類（在 Google 日曆建立活動時選色）。
+    - generic [ref=e86]:
+      - generic [ref=e87]:
+        - generic [ref=e88]:
+          - generic [ref=e89]:
+            - button "上個" [ref=e90] [cursor=pointer]:
+              - img [ref=e91]: 
+            - button "下個" [ref=e92] [cursor=pointer]:
+              - img [ref=e93]: 
+          - button "今天" [disabled] [ref=e94]
+        - heading "2026年6月" [level=2] [ref=e96]
+        - generic [ref=e98]:
+          - button "月曆" [pressed] [ref=e99] [cursor=pointer]
+          - button "清單" [ref=e100] [cursor=pointer]
+      - generic "2026年6月" [ref=e101]:
+        - grid [ref=e103]:
+          - rowgroup [ref=e104]:
+            - row "星期一 星期二 星期三 星期四 星期五 星期六 星期日" [ref=e108]:
+              - columnheader "星期一" [ref=e109]:
+                - generic "星期一" [ref=e111]: 週一
+              - columnheader "星期二" [ref=e112]:
+                - generic "星期二" [ref=e114]: 週二
+              - columnheader "星期三" [ref=e115]:
+                - generic "星期三" [ref=e117]: 週三
+              - columnheader "星期四" [ref=e118]:
+                - generic "星期四" [ref=e120]: 週四
+              - columnheader "星期五" [ref=e121]:
+                - generic "星期五" [ref=e123]: 週五
+              - columnheader "星期六" [ref=e124]:
+                - generic "星期六" [ref=e126]: 週六
+              - columnheader "星期日" [ref=e127]:
+                - generic "星期日" [ref=e129]: 週日
+          - rowgroup [ref=e130]:
+            - generic [ref=e133]:
+              - row "2026年6月1日 2026年6月2日 2026年6月3日 2026年6月4日 2026年6月5日 2026年6月6日 2026年6月7日" [ref=e135]:
+                - gridcell "2026年6月1日" [ref=e136]:
+                  - generic "2026年6月1日" [ref=e139]: 1日
+                - gridcell "2026年6月2日" [ref=e141]:
+                  - generic "2026年6月2日" [ref=e144]: 2日
+                - gridcell "2026年6月3日" [ref=e146]:
+                  - generic "2026年6月3日" [ref=e149]: 3日
+                - gridcell "2026年6月4日" [ref=e151]:
+                  - generic "2026年6月4日" [ref=e154]: 4日
+                - gridcell "2026年6月5日" [ref=e156]:
+                  - generic "2026年6月5日" [ref=e159]: 5日
+                - gridcell "2026年6月6日" [ref=e161]:
+                  - generic "2026年6月6日" [ref=e164]: 6日
+                - gridcell "2026年6月7日" [ref=e166]:
+                  - generic "2026年6月7日" [ref=e169]: 7日
+              - row "2026年6月8日 2026年6月9日 2026年6月10日 2026年6月11日 2026年6月12日 2026年6月13日 2026年6月14日" [ref=e171]:
+                - gridcell "2026年6月8日" [ref=e172]:
+                  - generic "2026年6月8日" [ref=e175]: 8日
+                - gridcell "2026年6月9日" [ref=e177]:
+                  - generic "2026年6月9日" [ref=e180]: 9日
+                - gridcell "2026年6月10日" [ref=e182]:
+                  - generic "2026年6月10日" [ref=e185]: 10日
+                - gridcell "2026年6月11日" [ref=e187]:
+                  - generic "2026年6月11日" [ref=e190]: 11日
+                - gridcell "2026年6月12日" [ref=e192]:
+                  - generic "2026年6月12日" [ref=e195]: 12日
+                - gridcell "2026年6月13日" [ref=e197]:
+                  - generic "2026年6月13日" [ref=e200]: 13日
+                - gridcell "2026年6月14日" [ref=e202]:
+                  - generic "2026年6月14日" [ref=e205]: 14日
+              - row "2026年6月15日 2026年6月16日 2026年6月17日 2026年6月18日 2026年6月19日 2026年6月20日 2026年6月21日" [ref=e207]:
+                - gridcell "2026年6月15日" [ref=e208]:
+                  - generic "2026年6月15日" [ref=e211]: 15日
+                - gridcell "2026年6月16日" [ref=e213]:
+                  - generic "2026年6月16日" [ref=e216]: 16日
+                - gridcell "2026年6月17日" [ref=e218]:
+                  - generic "2026年6月17日" [ref=e221]: 17日
+                - gridcell "2026年6月18日" [ref=e223]:
+                  - generic "2026年6月18日" [ref=e226]: 18日
+                - gridcell "2026年6月19日" [ref=e228]:
+                  - generic "2026年6月19日" [ref=e231]: 19日
+                - gridcell "2026年6月20日" [ref=e233]:
+                  - generic "2026年6月20日" [ref=e236]: 20日
+                - gridcell "2026年6月21日" [ref=e238]:
+                  - generic "2026年6月21日" [ref=e241]: 21日
+              - row "2026年6月22日 2026年6月23日 2026年6月24日 2026年6月25日 2026年6月26日 2026年6月27日 2026年6月28日" [ref=e243]:
+                - gridcell "2026年6月22日" [ref=e244]:
+                  - generic "2026年6月22日" [ref=e247]: 22日
+                - gridcell "2026年6月23日" [ref=e249]:
+                  - generic "2026年6月23日" [ref=e252]: 23日
+                - gridcell "2026年6月24日" [ref=e254]:
+                  - generic "2026年6月24日" [ref=e257]: 24日
+                - gridcell "2026年6月25日" [ref=e259]:
+                  - generic "2026年6月25日" [ref=e262]: 25日
+                - gridcell "2026年6月26日" [ref=e264]:
+                  - generic "2026年6月26日" [ref=e267]: 26日
+                - gridcell "2026年6月27日" [ref=e269]:
+                  - generic "2026年6月27日" [ref=e272]: 27日
+                - gridcell "2026年6月28日" [ref=e274]:
+                  - generic "2026年6月28日" [ref=e277]: 28日
+              - row "2026年6月29日 2026年6月30日 2026年7月1日 2026年7月2日 2026年7月3日 2026年7月4日 2026年7月5日" [ref=e279]:
+                - gridcell "2026年6月29日" [ref=e280]:
+                  - generic "2026年6月29日" [ref=e283]: 29日
+                - gridcell "2026年6月30日" [ref=e285]:
+                  - generic "2026年6月30日" [ref=e288]: 30日
+                - gridcell "2026年7月1日" [ref=e290]:
+                  - generic "2026年7月1日" [ref=e293]: 1日
+                - gridcell "2026年7月2日" [ref=e295]:
+                  - generic "2026年7月2日" [ref=e298]: 2日
+                - gridcell "2026年7月3日" [ref=e300]:
+                  - generic "2026年7月3日" [ref=e303]: 3日
+                - gridcell "2026年7月4日" [ref=e305]:
+                  - generic "2026年7月4日" [ref=e308]: 4日
+                - gridcell "2026年7月5日" [ref=e310]:
+                  - generic "2026年7月5日" [ref=e313]: 5日
+              - row "2026年7月6日 2026年7月7日 2026年7月8日 2026年7月9日 2026年7月10日 2026年7月11日 2026年7月12日" [ref=e315]:
+                - gridcell "2026年7月6日" [ref=e316]:
+                  - generic "2026年7月6日" [ref=e319]: 6日
+                - gridcell "2026年7月7日" [ref=e321]:
+                  - generic "2026年7月7日" [ref=e324]: 7日
+                - gridcell "2026年7月8日" [ref=e326]:
+                  - generic "2026年7月8日" [ref=e329]: 8日
+                - gridcell "2026年7月9日" [ref=e331]:
+                  - generic "2026年7月9日" [ref=e334]: 9日
+                - gridcell "2026年7月10日" [ref=e336]:
+                  - generic "2026年7月10日" [ref=e339]: 10日
+                - gridcell "2026年7月11日" [ref=e341]:
+                  - generic "2026年7月11日" [ref=e344]: 11日
+                - gridcell "2026年7月12日" [ref=e346]:
+                  - generic "2026年7月12日" [ref=e349]: 12日
+  - contentinfo [ref=e351]:
+    - generic [ref=e352]: © 2026 MIN ZANG
+  - generic [ref=e37]:
+    - button "播放 / 暫停" [ref=e38] [cursor=pointer]:
+      - generic [ref=e44]: ❚❚
+    - generic [ref=e40]: Moonlit Shoreline
+    - button "下一首" [ref=e41] [cursor=pointer]: ⏭
+    - slider "音量" [ref=e42] [cursor=pointer]: "0.4"
+  - generic [ref=e354]: 行事曆 | MIN ZANG

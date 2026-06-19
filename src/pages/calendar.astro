@@ -15,8 +15,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   import zhTwLocale from '@fullcalendar/core/locales/zh-tw';
   import { GCAL_API_KEY, GCAL_ID } from '../config/calendar';
 
-  const el = document.getElementById('calendar');
-  if (el) {
+  function initCalendar() {
+    const el = document.getElementById('calendar');
+    if (!el || el.dataset.init) return;
+    el.dataset.init = '1';
     const isMobile = window.matchMedia('(max-width: 600px)').matches;
     const calendar = new Calendar(el, {
       plugins: [dayGridPlugin, listPlugin, googleCalendarPlugin],
@@ -42,4 +44,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     });
     calendar.render();
   }
+
+  // 換頁後（astro:page-load）與直接載入時都嘗試初始化（dataset.init 防重複）
+  document.addEventListener('astro:page-load', initCalendar);
+  initCalendar();
 </script>

@@ -3,7 +3,7 @@ import { playlist } from '../data/music';
 const hasMusic = playlist.length > 0;
 const firstTitle = hasMusic ? playlist[0].title : '尚未加入音樂';
 ---
-<div id="music-player" class="music-player">
+<div id="music-player" class="music-player" transition:persist="music">
   <button id="music-toggle" class="music-btn" aria-label="播放 / 暫停" disabled={!hasMusic}>
     <span class="music-icon-play">▶</span>
     <span class="music-icon-pause">❚❚</span>
@@ -43,9 +43,10 @@ const firstTitle = hasMusic ? playlist[0].title : '尚未加入音樂';
     load(0);
 
     toggle.addEventListener('click', () => {
-      if (audio.paused) audio.play(); else audio.pause();
+      if (audio.paused) audio.play();
+      else { audio.pause(); localStorage.setItem('music-on', '0'); }
     });
-    audio.addEventListener('play', () => player.classList.add('playing'));
+    audio.addEventListener('play', () => { player.classList.add('playing'); localStorage.setItem('music-on', '1'); });
     audio.addEventListener('pause', () => player.classList.remove('playing'));
     audio.addEventListener('ended', () => { load(idx + 1); audio.play(); });
     nextBtn?.addEventListener('click', () => {
@@ -57,5 +58,16 @@ const firstTitle = hasMusic ? playlist[0].title : '尚未加入音樂';
       audio.volume = parseFloat(volume.value);
       localStorage.setItem('music-vol', volume.value);
     });
+
+    // 第一次與頁面互動（點任意處）就自動開始播放，除非使用者曾手動暫停
+    const wantsMusic = () => localStorage.getItem('music-on') !== '0';
+    if (wantsMusic()) {
+      const evs = ['pointerdown', 'touchstart', 'keydown'];
+      const startOnce = () => {
+        evs.forEach((ev) => document.removeEventListener(ev, startOnce));
+        if (audio.paused && wantsMusic()) audio.play().catch(() => {});
+      };
+      evs.forEach((ev) => document.addEventListener(ev, startOnce, { passive: true }));
+    }
   }
 </script>
