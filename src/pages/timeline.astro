@@ -1,0 +1,40 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { timeline } from '../data/timeline';
+
+const CAT_COLORS: Record<string, string> = {
+  life: '#16a34a',
+  work: '#2563eb',
+  travel: '#0e7490',
+  project: '#7c3aed',
+};
+const CAT_LABELS: Record<string, string> = {
+  life: '生活',
+  work: '工作',
+  travel: '旅遊',
+  project: '專案',
+};
+
+const entries = [...timeline].sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0));
+---
+<BaseLayout title="時間線 | MIN ZANG" description="由過去到現在，每天做了什麼的概覽。">
+  <h1>時間線</h1>
+  <p class="muted">由近到遠，記錄每天做了哪些事。</p>
+  {entries.length === 0 ? (
+    <p class="muted">還沒有紀錄。</p>
+  ) : (
+    <ul class="timeline">
+      {entries.map((e) => (
+        <li class="timeline-item" style={`--dot:${CAT_COLORS[e.category ?? ''] ?? 'var(--color-accent)'}`}>
+          <div class="timeline-date">
+            <span>{e.date}</span>
+            {e.category && <span class="timeline-cat">{CAT_LABELS[e.category] ?? e.category}</span>}
+          </div>
+          <p class="timeline-summary">
+            {e.link ? <a href={e.link}>{e.summary}</a> : e.summary}
+          </p>
+        </li>
+      ))}
+    </ul>
+  )}
+</BaseLayout>

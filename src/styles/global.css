@@ -152,3 +152,40 @@ h1, h2, h3 { line-height: 1.25; font-weight: 700; }
   #calendar .fc-toolbar.fc-header-toolbar { flex-direction: column; gap: 0.5rem; }
   #calendar .fc-toolbar-title { font-size: 1.1rem; }
 }
+
+/* 時間線 */
+.timeline { list-style: none; position: relative; margin: 1.5rem 0 0; padding: 0 0 0 1.5rem; }
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 0.33rem;
+  top: 0.4rem;
+  bottom: 0.4rem;
+  width: 2px;
+  background: var(--color-border);
+}
+.timeline-item { position: relative; padding: 0 0 1.6rem 0.6rem; }
+.timeline-item:last-child { padding-bottom: 0; }
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  left: -1.17rem;
+  top: 0.4rem;
+  width: 0.72rem;
+  height: 0.72rem;
+  border-radius: 50%;
+  background: var(--dot, var(--color-accent));
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.95);
+}
+.timeline-date { font-size: 0.82rem; color: var(--color-muted); font-weight: 600; }
+.timeline-cat {
+  display: inline-block;
+  margin-left: 0.5rem;
+  padding: 0.05rem 0.45rem;
+  border-radius: 999px;
+  background: var(--dot, var(--color-accent));
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+.timeline-summary { margin: 0.2rem 0 0; }
