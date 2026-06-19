@@ -7,9 +7,6 @@ backend:
 media_folder: public/images/uploads
 public_folder: /images/uploads
 
-# 介面語言
-locale: zh
-
 collections:
   - name: journal
     label: 生活日誌
