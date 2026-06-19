@@ -1,40 +1,62 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { timeline } from '../data/timeline';
+import { timeline, type TimelineEntry } from '../data/timeline';
 
-const CAT_COLORS: Record<string, string> = {
-  life: '#16a34a',
-  work: '#2563eb',
-  travel: '#0e7490',
-  project: '#7c3aed',
-};
-const CAT_LABELS: Record<string, string> = {
-  life: '生活',
-  work: '工作',
-  travel: '旅遊',
-  project: '專案',
-};
+const PALETTE = ['#b98cc4', '#e6b84a', '#5fb0d4', '#d96e7a', '#6cc0a6', '#8a8fd0'];
+const CAT_LABELS: Record<string, string> = { life: '生活', work: '工作', travel: '旅遊', project: '專案' };
 
-const entries = [...timeline].sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0));
+// 由近到遠排序
+const sorted = [...timeline].sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0));
+
+// 依年份分組（新年份在前）
+const years: { year: string; items: TimelineEntry[] }[] = [];
+for (const e of sorted) {
+  const y = e.date.slice(0, 4);
+  let g = years.find((x) => x.year === y);
+  if (!g) { g = { year: y, items: [] }; years.push(g); }
+  g.items.push(e);
+}
+
+let gi = 0; // 全域索引，用來輪播節點顏色
 ---
-<BaseLayout title="時間線 | MIN ZANG" description="由過去到現在，每天做了什麼的概覽。">
+<BaseLayout title="時間線 | MIN ZANG" description="一段往下蜿蜒的旅程：每天做了什麼。">
   <h1>時間線</h1>
-  <p class="muted">由近到遠，記錄每天做了哪些事。</p>
-  {entries.length === 0 ? (
+  <p class="muted">像一條往下走的路，記錄每天的足跡。新的在上，較早的年份可點開。</p>
+
+  {sorted.length === 0 ? (
     <p class="muted">還沒有紀錄。</p>
   ) : (
-    <ul class="timeline">
-      {entries.map((e) => (
-        <li class="timeline-item" style={`--dot:${CAT_COLORS[e.category ?? ''] ?? 'var(--color-accent)'}`}>
-          <div class="timeline-date">
-            <span>{e.date}</span>
-            {e.category && <span class="timeline-cat">{CAT_LABELS[e.category] ?? e.category}</span>}
-          </div>
-          <p class="timeline-summary">
-            {e.link ? <a href={e.link}>{e.summary}</a> : e.summary}
-          </p>
-        </li>
-      ))}
-    </ul>
+    years.map((g, yi) => {
+      const list = (
+        <ol class="journey">
+          {g.items.map((e, i) => (
+            <li class={`journey-item ${i % 2 === 0 ? 'left' : 'right'}`} style={`--c:${PALETTE[gi++ % PALETTE.length]}`}>
+              <div class="journey-node">{e.icon ?? String(i + 1).padStart(2, '0')}</div>
+              <div class="journey-card">
+                <div class="journey-date">
+                  {e.date}
+                  {e.category && <span class="journey-cat">{CAT_LABELS[e.category] ?? e.category}</span>}
+                </div>
+                <div class="journey-title">{e.link ? <a href={e.link}>{e.summary}</a> : e.summary}</div>
+              </div>
+            </li>
+          ))}
+        </ol>
+      );
+
+      return yi === 0 ? (
+        <section class="journey-year">
+          <h2 class="journey-year-label">{g.year}</h2>
+          {list}
+        </section>
+      ) : (
+        <details class="journey-year">
+          <summary class="journey-year-label">
+            {g.year}<span class="journey-year-count">{g.items.length} 筆</span>
+          </summary>
+          {list}
+        </details>
+      );
+    })
   )}
 </BaseLayout>

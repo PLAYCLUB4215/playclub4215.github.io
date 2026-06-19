@@ -37,7 +37,7 @@ const { title, description = '生活、旅遊與 AI 專案的個人紀錄。' } 
       (function () {
         // 捲動進場動畫（換頁後也會對新內容重跑）
         function initReveal() {
-          var els = document.querySelectorAll('.post-card:not([data-rv]), .timeline-item:not([data-rv]), .album-grid figure:not([data-rv]), .video-embed:not([data-rv])');
+          var els = document.querySelectorAll('.post-card:not([data-rv]), .journey-item:not([data-rv]), .album-grid figure:not([data-rv]), .video-embed:not([data-rv])');
           if (!els.length) return;
           if (!('IntersectionObserver' in window)) {
             els.forEach(function (el) { el.setAttribute('data-rv', '1'); el.classList.add('in'); });

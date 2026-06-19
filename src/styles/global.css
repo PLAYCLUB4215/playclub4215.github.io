@@ -241,7 +241,7 @@ h1, h2, h3 { line-height: 1.25; font-weight: 700; }
     to { opacity: 1; transform: none; }
   }
   .anim .post-card,
-  .anim .timeline-item,
+  .anim .journey-item,
   .anim .album-grid figure,
   .anim .video-embed {
     opacity: 0;
@@ -249,7 +249,7 @@ h1, h2, h3 { line-height: 1.25; font-weight: 700; }
     transition: opacity 0.5s ease, transform 0.5s ease;
   }
   .anim .post-card.in,
-  .anim .timeline-item.in,
+  .anim .journey-item.in,
   .anim .album-grid figure.in,
   .anim .video-embed.in {
     opacity: 1;
@@ -279,42 +279,63 @@ h1, h2, h3 { line-height: 1.25; font-weight: 700; }
   #calendar .fc-toolbar-title { font-size: 1.1rem; }
 }
 
-/* 時間線 */
-.timeline { list-style: none; position: relative; margin: 1.5rem 0 0; padding: 0 0 0 1.5rem; }
-.timeline::before {
-  content: '';
-  position: absolute;
-  left: 0.33rem;
-  top: 0.4rem;
-  bottom: 0.4rem;
-  width: 2px;
-  background: var(--color-border);
+/* 時間線：往下蜿蜒的旅程（zigzag），依年份分組、較早年份可收合 */
+.journey-year { margin-top: 1.25rem; }
+.journey-year-label {
+  font-size: 1.15rem; font-weight: 800; letter-spacing: 0.04em;
+  color: var(--color-text); margin: 0 0 0.25rem;
 }
-.timeline-item { position: relative; padding: 0 0 1.6rem 0.6rem; }
-.timeline-item:last-child { padding-bottom: 0; }
-.timeline-item::before {
-  content: '';
-  position: absolute;
-  left: -1.17rem;
-  top: 0.4rem;
-  width: 0.72rem;
-  height: 0.72rem;
-  border-radius: 50%;
-  background: var(--dot, var(--color-accent));
-  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.95);
+details.journey-year > summary.journey-year-label {
+  cursor: pointer; list-style: none; display: flex; align-items: center; gap: 0.6rem;
+  padding: 0.5rem 0; border-top: 1px solid var(--color-border); margin-top: 1rem;
 }
-.timeline-date { font-size: 0.82rem; color: var(--color-muted); font-weight: 600; }
-.timeline-cat {
-  display: inline-block;
-  margin-left: 0.5rem;
-  padding: 0.05rem 0.45rem;
-  border-radius: 999px;
-  background: var(--dot, var(--color-accent));
-  color: #fff;
-  font-size: 0.7rem;
-  font-weight: 600;
+details.journey-year > summary::-webkit-details-marker { display: none; }
+details.journey-year > summary::before {
+  content: '▸'; color: var(--color-accent); transition: transform 0.15s ease;
 }
-.timeline-summary { margin: 0.2rem 0 0; }
+details.journey-year[open] > summary::before { transform: rotate(90deg); }
+.journey-year-count { font-size: 0.8rem; font-weight: 600; color: var(--color-muted); }
+
+.journey { list-style: none; margin: 1rem 0 0; padding: 0; position: relative; }
+.journey::before {
+  content: ''; position: absolute; top: 0; bottom: 0; left: 50%;
+  width: 8px; transform: translateX(-50%); border-radius: 4px;
+  background:
+    repeating-linear-gradient(to bottom, #ffffff 0 7px, rgba(255, 255, 255, 0) 7px 16px) center / 2px 100% no-repeat,
+    #d7dee3;
+}
+.journey-item { position: relative; width: 50%; box-sizing: border-box; }
+.journey-item.left { left: 0; text-align: right; padding: 0.8rem 2.4rem 0.8rem 0; }
+.journey-item.right { left: 50%; text-align: left; padding: 0.8rem 0 0.8rem 2.4rem; }
+.journey-node {
+  position: absolute; top: 1rem; width: 46px; height: 46px; border-radius: 50%;
+  background: var(--c); color: #fff; display: flex; align-items: center; justify-content: center;
+  font-weight: 800; font-size: 1rem; line-height: 1;
+  box-shadow: 0 0 0 5px var(--card-bg), 0 4px 12px rgba(0, 0, 0, 0.18); z-index: 1;
+}
+.journey-item.left .journey-node { right: -23px; }
+.journey-item.right .journey-node { left: -23px; }
+.journey-card {
+  display: inline-block; text-align: left; max-width: 100%;
+  background: #fff; border-radius: 12px; padding: 0.7rem 1rem;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+}
+.journey-item.left .journey-card { border-right: 4px solid var(--c); }
+.journey-item.right .journey-card { border-left: 4px solid var(--c); }
+.journey-date { font-weight: 700; color: var(--c); font-size: 0.9rem; }
+.journey-cat {
+  display: inline-block; margin-left: 0.5rem; padding: 0.03rem 0.45rem; border-radius: 999px;
+  background: var(--c); color: #fff; font-size: 0.68rem; font-weight: 600; vertical-align: middle;
+}
+.journey-title { margin-top: 0.2rem; }
+@media (max-width: 640px) {
+  .journey::before { left: 19px; }
+  .journey-item, .journey-item.left, .journey-item.right {
+    width: 100%; left: 0; text-align: left; padding: 0.7rem 0 0.7rem 3.2rem;
+  }
+  .journey-item.left .journey-node, .journey-item.right .journey-node { left: -4px; right: auto; }
+  .journey-item.left .journey-card { border-right: 0; border-left: 4px solid var(--c); }
+}
 
 /* 關於我 hero */
 .about-hero { display: flex; gap: 2rem; align-items: center; flex-wrap: wrap; }
