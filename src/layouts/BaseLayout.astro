@@ -30,17 +30,8 @@ const { title, description = '生活、旅遊與 AI 專案的個人紀錄。' } 
       <div class="container">© {new Date().getFullYear()} MIN ZANG</div>
     </footer>
     <MusicPlayer />
-    <script src="/oneko.js" data-cat="/oneko.gif" is:inline></script>
+    <div id="cat-runner" aria-hidden="true"></div>
     <script is:inline>
-      // 讓手機觸控也能逗貓：把 touch 轉成 mousemove，貓就會追手指
-      function onekoTouch(e) {
-        var t = e.touches[0];
-        if (!t) return;
-        document.dispatchEvent(new MouseEvent('mousemove', { clientX: t.clientX, clientY: t.clientY }));
-      }
-      document.addEventListener('touchstart', onekoTouch, { passive: true });
-      document.addEventListener('touchmove', onekoTouch, { passive: true });
-
       // 捲動進場動畫：元素進入畫面時淡入上移（尊重 prefers-reduced-motion 由 CSS 控制）
       (function () {
         var els = document.querySelectorAll('.post-card, .timeline-item, .album-grid figure, .video-embed');
