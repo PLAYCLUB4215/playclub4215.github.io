@@ -1,17 +1,39 @@
 ---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PostCard from '../components/PostCard.astro';
 
+// 匯整 journal + travel 最新 5 篇
+const journal = (await getCollection('journal')).filter((p) => !p.data.draft);
+const travel = (await getCollection('travel')).filter((p) => !p.data.draft);
+const latest = [
+  ...journal.map((p) => ({ ...p, section: 'journal' })),
+  ...travel.map((p) => ({ ...p, section: 'travel' })),
+]
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+  .slice(0, 5);
 ---
+<BaseLayout title="MIN ZANG | 個人網站">
+  <section>
+    <h1>嗨，我是 MIN ZANG 👋</h1>
+    <p>這裡記錄我的生活、旅遊，以及 AI 專案。</p>
+  </section>
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+  <section>
+    <h2>最新文章</h2>
+    {latest.length === 0 ? (
+      <p class="muted">還沒有文章。</p>
+    ) : (
+      <ul class="post-list">
+        {latest.map((p) => (
+          <PostCard
+            href={`/${p.section}/${p.id}`}
+            title={p.data.title}
+            date={p.data.date}
+            description={p.data.description}
+          />
+        ))}
+      </ul>
+    )}
+  </section>
+</BaseLayout>
