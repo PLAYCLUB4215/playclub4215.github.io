@@ -354,8 +354,18 @@ h1, h2, h3 { line-height: 1.25; font-weight: 700; }
 .btn-primary:hover { background: var(--color-accent-strong); border-color: var(--color-accent-strong); color: #fff; text-decoration: none; }
 .btn-ghost { background: transparent; color: var(--color-accent); }
 .btn-ghost:hover { background: rgba(14, 116, 144, 0.08); text-decoration: none; }
+.about-socials { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.9rem; }
+.about-socials a {
+  font-size: 0.85rem;
+  padding: 0.3rem 0.8rem;
+  border-radius: 999px;
+  background: rgba(14, 116, 144, 0.08);
+  color: var(--color-accent);
+}
+.about-socials a:hover { background: rgba(14, 116, 144, 0.16); text-decoration: none; }
 @media (max-width: 600px) {
   .about-hero { flex-direction: column; text-align: center; }
   .about-actions { justify-content: center; }
+  .about-socials { justify-content: center; }
   .about-name { font-size: 2rem; }
 }
