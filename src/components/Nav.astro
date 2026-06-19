@@ -1,0 +1,15 @@
+---
+const links = [
+  { href: '/journal', label: '生活日誌' },
+  { href: '/travel', label: '旅遊' },
+  { href: '/albums', label: '相簿' },
+  { href: '/projects', label: 'AI 專案' },
+  { href: '/about', label: '關於' },
+];
+---
+<nav class="nav">
+  <a class="brand" href="/">MIN ZANG</a>
+  <div class="links">
+    {links.map((l) => <a href={l.href}>{l.label}</a>)}
+  </div>
+</nav>
